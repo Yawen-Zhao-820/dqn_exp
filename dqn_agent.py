@@ -4,7 +4,7 @@ import tensorflow as tf
 
 
 import numpy as np
-from tensorflow.python.keras import Sequential
+from tensorflow.keras.models import Sequential
 from tensorflow.python.keras.layers import Dense
 
 
@@ -38,8 +38,16 @@ class DqnAgent:
         q_net.add(
             Dense(2, activation='linear', kernel_initializer='he_uniform'))
 
-            
-        opt = tf.keras.optimizers.Adam(learning_rate=0.1)
+
+        opt = tf.keras.optimizers.Adam(
+            learning_rate=0.001,
+            beta_1=0.9,
+            beta_2=0.999,
+            epsilon=1e-07,
+            amsgrad=False,
+            name='Adam',
+        )
+
         q_net.compile(loss='mse', optimizer = opt)
         return q_net
 
